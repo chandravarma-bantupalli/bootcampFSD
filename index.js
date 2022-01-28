@@ -21,6 +21,8 @@ const express = require('express');
 const port = 5000;
 const app = express();
 const router = express.Router();
+// decomposing all routes in different file and using them from there
+const routes = require('./routes/routes');
 
 // app.get('/', function(request, response) {
 //     response.send("Hello from Chandra Varma - via express.js");
@@ -35,21 +37,8 @@ const router = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-router.get('/', (request, response) => {
-    response.send("Hello from Chandra Varma - via express.js");
-});
-
-router.get('/aboutus', function(req, res){
-	res.send("You are on the about us  route");
-});
-
-
-router.post('/addweight', function(request, response) {
-    let empName = request.body.empName;
-    let empWeight = request.body.empWeight;
-    response.end(`POST req made, I got ${empName} and ${empWeight}, thankyou`);
-});
+routes(router);
 
 app.use('/', router);
-app.listen(port, () =>     console.log('listenting to ' + port + ', acknowledged') );
+app.listen(port, () =>  console.log('listenting to ' + port + ', acknowledged') );
 
